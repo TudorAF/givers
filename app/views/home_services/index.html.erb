@@ -1,0 +1,84 @@
+<body class="bg-gray-200 font-sans p-10 h-64">
+  <div class="max-w-md mx-auto bg-white rounded-xl p-11 shadow-lg">
+      <div class="flex justify-between items-center mb-2">
+        <h1 class="text-2xl font-bold">Select Agency</h1>
+          <!--hamburger menu, could be moved to nav in application html depending on the rest of the app or a abstracted  -->
+        <div x-data="{ open: false }" class="relative">
+    <button @click="open = !open" class="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded inline-block p-2">
+        <!-- Hamburger SVG icon -->
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+    </button>
+    <div @mouseleave="open = false" x-show="open" x-transition:enter="transition transform origin-top-right ease-out duration-200" x-transition:enter-start="scale-75 opacity-50" x-transition:enter-end="scale-100 opacity-100" x-transition:leave="transition transform origin-top-right ease-in duration-100" x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-75 opacity-50" class="absolute right-0 w-64 bg-white rounded shadow-lg p-4">
+        <!-- Link to /home -->
+        <a href="/home" class="block text-black hover:text-blue-500 hover:bg-gray-100 rounded p-2">Home</a>
+    </div>
+</div>
+      </div>
+      <h2 class="text-xl font-bold mb-4">Select a home care agency to hire you</h2>
+
+    <!-- Accordion wrapper -->
+    <div class="accordion w-full my-4">
+      <button class="accordion-button focus:outline-none flex justify-between items-center w-full py-2 border rounded text-gray-500 border-none text-sm">
+        Why do I need to select a home care agency?
+        <span class="accordion-icon mr-2">
+          <!-- Default arrow pointing downwards for collapsed state -->
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </span>
+      </button>
+      <!-- Accordion content -->
+      <div class="accordion-content hidden mt-5 p-4  text-gray-500 border-none text-sm">
+        <p class="text-gray-500 border-none text-sm">Home care agencies play a critical role in supporting you becoming a paid caregiver.
+Home care agencies will help you complete the training and credentialling required. From there, the home care agency acts as your employer, making sure you are supported and providing high quality care to your loved one.
+Reach out to one of our partner agencies below to learn if working with them would be a good fit.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex justify-end mb-0">
+      <div class="flex items-center">
+        <label for="sort" class="text-gray-500 mr-2 text-sm">Sort by:</label>
+        <div class="relative">
+          <select id="filterDistance" class="rounded-md p-2 bg-white focus:border-none focus:ring-transparent focus:ring-0 transition duration-150 pr-9 text-gray-500 border-none text-sm">
+            <option value="all">All</option>
+            <option value="1">1 mi</option>
+            <option value="5">5 mi</option>
+            <option value="10">10 mi</option>
+            <option value="20">20 mi</option>
+            <option value="50">50 mi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    
+  <% @home_services.each do |service| %>
+    <a href="/home_services/<%= service.id %>" class="block text-decoration-none">
+    <div class="agency bg-purple-100 p-6 rounded-xl mb-2" data-latitude="<%= service.latitude %>" data-longitude="<%= service.longitude %>">
+      <h3 class="text-lg mb-4"><%= service.name %></h3>
+      <div class="flex justify-between">
+        <div class="flex items-center">
+          <!-- Money SVG icon this -->
+          <span class="flex items-center text-gray-500 text-m mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#6b21a8}</style><path d="M160 0c17.7 0 32 14.3 32 32V67.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V445.1c-.4-.1-.9-.1-1.3-.2l-.2 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11V32c0-17.7 14.3-32 32-32z"/></svg> 
+              <%= service.rate/100.0 %>/hr
+            </span>
+
+          <!-- Distance SVG icon -->
+          <span class="flex items-center text-gray-500 text-m mr-4">
+            <svg class="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="10" r="3"></circle>
+              <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+            </svg>
+            <span class="distance-display">--</span> mi
+          </span>
+        </div>
+      </div>
+    </div>
+    </a>
+  <% end %>
+  </div >
+</body>

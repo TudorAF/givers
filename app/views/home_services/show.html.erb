@@ -1,0 +1,75 @@
+<body class="bg-gray-200 font-sans p-10">
+    <div class="flex flex-col justify-between max-w-md mx-auto bg-white rounded-xl p-11 shadow-lg h-full" x-data="{ clicked: false }">
+        <!-- Agency details -->
+        <h1 class="text-xl font-bold flex-col">Select Agency</h1>
+
+        <div class="agency-detail mb-6 flex-col">
+            <!-- About the home service -->
+            <div class="flex-col p-2">
+                <h2 class="font-bold"><%= @home_service.name %></h2>
+                <p class="text-gray-500 mr-2 text-sm"><%= @home_service.description %></p>
+            </div>
+
+            <!-- Hourly rate details -->
+            <div class="flex-col items-center p-2">
+                <span class="flex items-center text-gray-500 text-m mr-4">
+                    <!-- SVG icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                        <!-- SVG path -->
+                        <style>svg{fill:#6b21a8}</style>
+                        <path d="M160 0c17.7 0 32 14.3 32 32V67.7c1.6 ..."></path>
+                    </svg>
+
+                    <h3 class="text-gray-500 text-lg"><%= @home_service.rate/100.0 %>/hr</h3>
+                </span>
+                <p class="flex items-center text-gray-500 text-sm pb-4">
+                    <%= @home_service.name %> pays <%= @home_service.dollars_and_cents %> per hour.
+                    The average hourly rate for a caregiver in your state is $15.09 
+                </p>
+            </div>
+
+            <!-- Distance details -->
+            <div class="flex-col items-center pb-9">
+                <span class="flex items-center text-gray-500 text-sm mr-4">
+                    <svg class="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="10" r="3"></circle>
+                        <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+                    </svg>
+                    <!-- Address is hard coded for now until   -->
+                    <span class='text-gray-500 text-m'>123 Main Street, New York, New York 10012</span>
+                </span>
+            </div>
+
+            <!-- Process details -->
+            <div class="flex-col items-center pb-8">
+                <h3 class="text-bold text-lg"><%= @home_service.name %>'s Process</h3>
+                <p class="flex items-center text-gray-500 text-sm mr-4">
+                    The process is to add call you within 48 hours and 10 days for paperwork.
+                </p>
+            </div>
+        </div>
+
+        <!-- Request a callback button -->
+        <div class="w-full text-center">
+            <a 
+                href="#" 
+                @click.prevent="clicked = true" 
+                :class="{'opacity-0': clicked}" 
+                class="w-3/4 bg-purple-800 text-white py-2 px-4 rounded inline-block transition-opacity duration-900"
+            >
+                Request a Callback
+            </a>
+
+            <div 
+                x-show.transition="clicked" 
+                class="w-16 h-16 bg-purple-400 rounded-full mx-auto flex items-center justify-center text-white text-4xl"
+            >
+                ✓
+            </div>
+            <p x-show.transition="clicked" class="mt-4 text-gray-700">
+                Your contact information has been sent to <%= @home_service.name %>. You should expect a phone call within 48 hours.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
